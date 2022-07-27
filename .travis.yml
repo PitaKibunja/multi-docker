@@ -1,0 +1,24 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t pita/react-test -f ./client/Dockerfile.dev ./client 
+  
+script:
+  #this ensures that the test scrip exits with 0 or 1 it fails or not
+  - docker run pita/react-test npm test -- --coverage
+
+#If the test succeed.
+after_success:
+  - docker build -t pita/multi-client ./client
+  - docker build -t pita/multi-nginx ./nginx
+  - docker build -t pita/multi-server ./server
+  - docker build -t pita/multi-worker ./worker
+  #log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login-u "$DOCKER_ID" --password-stdin
+  #take those images and push them to docker hub
+  - docker push pita/multi-client
+  - docker push pita/multi-nginx
+  - docker push pita/multi-server
+  - docker push pita/multi-worker
