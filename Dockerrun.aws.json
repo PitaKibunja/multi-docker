@@ -1,0 +1,23 @@
+{
+    "AWSEBDockerrunVersion":2,
+    "containerDefinitions":[
+        {
+            "name":"client",
+            "image":"pita/multi-client",
+            "hostname":"client",
+            "essential": false
+        },
+        {
+            "name":"server",
+            "image":"pita/multi-server",
+            "hostname":"api",
+            "essential":false
+        },
+        {
+            "name":"worker",
+            "image":"pita/multi-worker",
+            "hostname":"worker",
+            "essential":false
+        }
+    ]
+}
