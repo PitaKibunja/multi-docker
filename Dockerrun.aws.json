@@ -18,6 +18,19 @@
             "image":"pita/multi-worker",
             "hostname":"worker",
             "essential":false
+        },
+        {
+            "name":"nginx",
+            "image":"pita/multi-nginx",
+            "hostname":"nginx",
+            "essential":true,
+            "portMappings":[ 
+                {
+                    "hostPort":80,
+                    "containerPort":80
+                }
+            ],
+            "links":["client","server"]
         }
     ]
 }
